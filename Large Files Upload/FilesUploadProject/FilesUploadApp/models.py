@@ -1,3 +1,4 @@
+from django.core.validators import FileExtensionValidator
 from django.db import models
 import datetime, os
 # Create your models here.
@@ -15,7 +16,8 @@ class FileUpload(models.Model):
 
     id = models.BigAutoField(primary_key=True)
     file_name = models.CharField(max_length=150, blank=True)
-    file = models.FileField(upload_to=photo_path, blank=False)
+    file = models.FileField(upload_to=photo_path, validators=[FileExtensionValidator(
+        allowed_extensions=['jpg', 'png', 'bmp'])], blank=False)
     created_on = models.DateField(blank=False)
     created_user_id = models.IntegerField(blank=True)
     modified_on = models.DateField(null=True, blank=True)
