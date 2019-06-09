@@ -27,5 +27,6 @@ class FileUpload(models.Model):
         return self.file_name
 
     def get_absolute_url(self):
-        return u'/file/%d' % self.id
+        return u'file_upload_second_success_url'
+        #return u'/file/%d' % self.id
 

@@ -9,4 +9,7 @@ class FileUploadCreateForm(forms.ModelForm):
         exclude = ('id', 'file_name',
                    'created_on', 'created_user_id',
                    'modified_on', 'modified_user_id')
+        labels = {
+            'file': 'Select a file'
+        }
 
