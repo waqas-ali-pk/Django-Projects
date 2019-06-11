@@ -12,7 +12,9 @@
 //  });
 //};
 
+
 $(function() {
+    $body = $("body");
     $('#post-form').on('submit', function(event){
         event.preventDefault();
         console.log("form submitted!")
@@ -27,6 +29,8 @@ $(function() {
             url : "file_upload_2/", // the endpoint
             type : "POST", // http method
             data : formData,
+            beforeSend: function() { $body.addClass("loading"); },
+            complete: function() { $body.removeClass("loading"); },
             processData: false,
             contentType: false,
             success : function(json) {
