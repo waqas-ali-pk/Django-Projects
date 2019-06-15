@@ -37,7 +37,7 @@ $(function() {
                 console.log(json); // log the returned json to the console
                 console.log("success"); // another sanity check
 
-                window.location.href = 'file_upload_second_success_url'
+                window.location.href = 'make_and_download_csv' //'file_upload_second_success_url'
             },
             // handle a non-successful response
             error : function(xhr,errmsg,err) {

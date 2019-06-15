@@ -3,6 +3,8 @@ from django.shortcuts import render
 from django.views.generic.edit import CreateView
 from .forms import FileUploadCreateForm
 from django.http import HttpResponse, JsonResponse
+import csv
+from django.conf import settings
 
 
 # Create your views here.
@@ -26,7 +28,27 @@ class FileUploadCreate(CreateView):
 
 
 def file_upload_second_success_url(request):
+
     return HttpResponse("File uploaded successfully")
+
+
+def make_and_download_csv(request):
+
+    lst = [[1, 2, 3], [1, 2, 3]]
+    random_str = datetime.datetime.now().strftime("%Y-%m-%d %H%M%S%f")
+    csv_dir = str(settings.BASE_DIR) + "/CSV Files/"
+    csv_name = "csv_" + str(random_str)
+    ext = "csv"
+    csv_path = csv_dir + csv_name + "." + ext
+    with open(csv_path, 'w', newline='') as writeFile:
+        writer = csv.writer(writeFile, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+        writer.writerows(lst)
+    writeFile.close()
+
+    with open(csv_path, 'rb') as fh:
+        response = HttpResponse(fh.read(), content_type="application/octet-stream")
+        response['Content-Disposition'] = 'attachment; filename=' + csv_name + "." + ext
+        return response
 
 
 class AjaxResponseMixin:
