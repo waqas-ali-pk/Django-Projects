@@ -1,7 +1,7 @@
 import random
 from celery import shared_task
-# from celery.task import PeriodTask
-# from celery.schedules import crontab
+from celery.task import PeriodicTask
+from celery.schedules import crontab
 # from datetime import timedelta
 
 
@@ -14,14 +14,15 @@ def email_digest(name, email):
 def send_email(name, email):
     print(f"Email sent to {name} at {email}")
 
-# @shared_task
-# def addreport(x, y):
-#     print("Celery add_report function started.")
-#     return x + y
 
-# class MyCustomSchedularTask(PeriodTask):
-#     run_every = crontab(minute=1) #  timedelta(minutes=1) #  
+@shared_task
+def generate_report(name):
+    print(f"{name} report generated successfully.")
 
-#     def run(self, **kwargs):
-#         print("Adding task from custom schedular. PeriodTask.")
-#         addreport(500, 600)
+
+class GenerateReportHourly(PeriodicTask):
+    run_every = crontab(hour='*/1')  # timedelta(minutes=1)
+
+    def run(self, **kwargs):
+        print("Adding task from class based periodic scheduler.")
+        generate_report("John")
