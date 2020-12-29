@@ -2,6 +2,7 @@ import random
 from celery import shared_task
 from celery.task import PeriodicTask
 from celery.schedules import crontab
+import time
 # from datetime import timedelta
 
 
@@ -12,11 +13,15 @@ def email_digest(name, email):
 
 @shared_task(name="send_email_task")
 def send_email(name, email):
+    print("sending email.")
+    time.sleep(10)
     print(f"Email sent to {name} at {email}")
 
 
 @shared_task
 def generate_report(name):
+    print("starting report..")
+    time.sleep(15)
     print(f"{name} report generated successfully.")
 
 

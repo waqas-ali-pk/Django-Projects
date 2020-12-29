@@ -65,6 +65,9 @@ It worked for me:
 celery -A CeleryProject worker --pool=solo -l info
 basically things become single threaded and are suppoted
 
+## second worker
+celery -A CeleryProject worker -n worker2 --pool=solo -l info
+
 Setup Schedule to Run Tasks:
 
 Run Scheduled Tasks With Celery Beat:
@@ -75,4 +78,33 @@ You can also have the beat server run as it's own process with
 celery -A CeleryProject beat -l info
 
 
+# celery flower
+Installation
+Installing flower with pip is simple
 
+$ pip install flower
+Development version can be installed with
+
+$ pip install https://github.com/mher/flower/zipball/master#egg=flower
+Usage
+Launch the server and open http://localhost:5555
+
+$ flower -A proj --port=5555
+Or, launch from Celery
+
+$ celery flower -A proj --address=127.0.0.1 --port=5555
+Broker URL and other configuration options can be passed through the standard Celery options
+
+$ celery flower -A proj --broker=amqp://guest:guest@localhost:5672//
+
+#### command to run flower
+celery flower -A CeleryProject --broker=redis://localhost:6379//
+
+#-- 1
+celery -A CeleryProject flower --broker=redis://localhost:6379//
+
+#-- 2
+celery -A CeleryProject flower
+
+celery events: Curses Monitor
+celery -A CeleryProject events
