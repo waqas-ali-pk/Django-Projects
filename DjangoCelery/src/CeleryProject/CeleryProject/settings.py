@@ -41,6 +41,8 @@ INSTALLED_APPS = [
 
     'django_celery_beat',
     'django_celery_results',
+
+    'django_crontab',
 ]
 
 
@@ -73,6 +75,11 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'CeleryProject.wsgi.application'
+
+
+CRONJOBS = [
+    ('* * * * *', 'CeleryApp.cron.test_cron_job')
+]
 
 
 # Database
