@@ -1,3 +1,5 @@
+# Setup django celery on windows
+
 #create virtual environment.
 virtualenv venv
 
