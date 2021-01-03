@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  worker_3:
+    build: .
+    hostname: worker_3
+    command: celery -A dockerceleryproject worker -l info --max-tasks-per-child=1
+    volumes:
+      - .:/app
+    networks: 
+      - worker-net
+
+networks: 
+  worker-net:
+    external: 
+      name: redis-network-ext

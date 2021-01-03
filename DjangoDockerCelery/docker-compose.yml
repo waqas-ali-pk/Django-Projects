@@ -13,8 +13,17 @@ services:
      - "8000:8000"
     depends_on: 
       - redis
+    networks: 
+      - redis-network
   redis:
-    image: "redis:alpine"
+    # image: "redis:alpine"
+    build:
+      context: .
+      dockerfile: redis/Dockerfile
+    ports:
+      - 6379:6379
+    networks: 
+      - redis-network
   worker_1:
     build: .
     hostname: worker_1
@@ -23,6 +32,8 @@ services:
       - .:/app
     depends_on: 
       - redis
+    networks: 
+      - redis-network
   worker_2:
     build: .
     hostname: worker_2
@@ -31,6 +42,8 @@ services:
       - .:/app
     depends_on: 
       - redis
+    networks: 
+      - redis-network
   beat:
     build: .
     command: celery -A dockerceleryproject beat -l info
@@ -38,6 +51,8 @@ services:
       - .:/app
     depends_on: 
       - redis
+    networks: 
+      - redis-network
   flower:
     image: mher/flower
     command: ["flower", "--broker=redis://redis", "--port=5555"]
@@ -46,4 +61,10 @@ services:
     expose:
     - 5555
     depends_on:
-    - redis
+      - redis
+    networks: 
+      - redis-network
+
+networks: 
+  redis-network:
+    name: redis-network-ext

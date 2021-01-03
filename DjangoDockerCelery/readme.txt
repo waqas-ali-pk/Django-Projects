@@ -111,3 +111,35 @@ docker-compose build
 # run docker
 docker-compose up
 
+#####################
+For standalone worker
+create new folder (standalone_worker) and create new docker-compose file
+
+Content of new docker-compose file.
+
+version: '3'
+
+services:
+  worker_3:
+    build: .
+    hostname: worker_3
+    command: celery -A dockerceleryproject worker -l info --max-tasks-per-child=1
+    volumes:
+      - .:/app
+    networks: 
+      - worker-net
+
+networks: 
+  worker-net:
+    external: 
+      name: redis-network-ext
+
+
+Copy required project files inside standalone_worker folder 
+# need to check, how this can be improved. (without copying code in this folder)
+
+#####################
+
+network details added in both docker-compose files, for cross docker communication.      
+
+
