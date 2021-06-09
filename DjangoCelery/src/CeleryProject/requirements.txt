@@ -1,7 +1,7 @@
 amqp==2.6.1
 billiard==3.6.3.0
 celery==4.4.7
-Django==2.2
+Django==2.2.22
 django-celery-beat==2.1.0
 django-celery-results==2.0.0
 django-timezone-field==4.1.1
