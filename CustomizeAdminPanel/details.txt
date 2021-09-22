@@ -1,0 +1,93 @@
+## https://www.youtube.com/watch?v=g5DTIiFAiSk&list=RDCMUC33uwXXDrI5TxG4IXnjS28g&index=1
+#create virtual env
+virtualenv venv
+
+#activate virtual env
+.\venv\Scripts\activate.bat
+
+# create requirements.txt file with following content.
+django==2.2
+
+# run command to install django-admin
+pip install -r requirements.txt
+
+#make new directory
+mkdir src
+cd src
+
+# create django project
+django-admin startproject adminproject
+
+# move to project folder and create django app.
+cd adminproject
+python manage.py startapp adminapp
+
+# run command to open project in VS code
+code .
+
+# add app under installed apps in settings.py
+adminapp
+
+# add following lines in main urls.py file, to custom admin panel.
+admin.site.site_header = 'Atlas Dashboard'
+admin.site.site_title = 'Atlas admin panel title'
+admin.site.index_title = 'Welcome to Atlas Dashboard'
+
+# make migrations
+manage.py makemigrations
+
+# migrate
+manage.py migrate
+
+# run command to create super user # UN/PW: waqas/waqas
+manage.py createsuperuser
+
+# run server
+manage.py runserver 8001
+
+# open url in browser
+http://127.0.0.1:8001/admin/
+
+# create new model (with below content) in models.py file (in adminapp)
+from django.model import models
+
+
+class Snippet(models.Model):
+	name = models.CharField(max_length=500)
+    datetime = models.datetime(auto_now_add=True)
+	
+	def __str__(self):
+		return self.name
+	
+
+# make migrations and migrate again
+manage.py makemigrations
+manage.py migrate
+	
+# register new model, add following in admin.py file.
+from .models import Snippet
+
+admin.site.register(Snippet)
+
+# unregister existing model, add following in admin.py file.
+from django.contrib.auth.models import Group
+
+admin.site.unregister(Group)
+
+# add following in admin.py file
+class AdminSnippet(admin.ModelAdmin):
+    change_list_template = 'admin/snippets/snippet_change_list.html'
+
+
+admin.site.register(AdminSnippet)
+
+create new html admin/snippets/snippet_change_list.html file with following content.
+{% extends 'admin/change_list.html' %}
+{% block object-tools %}
+	<h1>Custom Admin Template<h2>
+	{{ block.super }}
+{% endblock object-tools %}
+
+
+<<< CHECK REMAINING >>>
+
