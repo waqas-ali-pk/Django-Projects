@@ -111,6 +111,11 @@ docker-compose build
 # run docker
 docker-compose up
 
+#### docker exec -it container_id python manage.py createsuperuser
+
+# create super user
+docker-compose run web /app/manage.py createsuperuser
+
 #####################
 For standalone worker
 create new folder (standalone_worker) and create new docker-compose file
