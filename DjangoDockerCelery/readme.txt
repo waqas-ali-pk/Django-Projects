@@ -116,6 +116,15 @@ docker-compose up
 # create super user
 docker-compose run web /app/manage.py createsuperuser
 
+#####
+# See logs of celery worker/beat inside docker.
+sudo docker logs -f "Image_name_of_celery"
+
+Note: "Image_name_of_celery" => check with docker image name or container id.
+
+# Check all the running docker containers and images
+sudo docker ps
+
 #####################
 For standalone worker
 create new folder (standalone_worker) and create new docker-compose file
